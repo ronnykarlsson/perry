@@ -11,7 +11,8 @@ Install-Module -Name Perry
 ## Example
 
 ```powershell
-# Load Perry with Interactive-flag to output errors to console (alternatively there is Get-Perry or Add-Perry -LogPath)
+# Load Perry with Interactive-flag to output errors to console.
+# Alternatively there is Get-Perry or Add-Perry -LogPath
 
 Add-Perry -Interactive
 
@@ -36,7 +37,8 @@ catch {
 ```
 
 ```powershell
-# What Perry does when running this example is to capture and output the error when it happens to easily find where it originates from.
+# What Perry does when running this example is to capture and output the error
+# when it happens to easily find where it originates from.
 
 PS> RunScript.ps1
 
