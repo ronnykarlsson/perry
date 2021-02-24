@@ -10,7 +10,9 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Build
-        run: dotnet publish -c Release -o publish\Perry
+        run: |
+          mkdir publish
+          dotnet publish -c Release -o publish\Perry
         
       - name: Publish
         run: Publish-Module -Path .\publish\Perry -NuGetApiKey ${{secrets.PSGALLERY}}
