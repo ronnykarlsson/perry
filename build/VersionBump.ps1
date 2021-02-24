@@ -3,7 +3,7 @@
 	[String] $Version,
 
 	[Parameter(Mandatory = $false)]
-	[String] $ModuleFilePath = "$PSScriptRoot\..\Perry\Perry.psd1"
+	[String] $ModuleFilePath = "$PSScriptRoot/../Perry/Perry.psd1"
 )
 
 if ($Version[0] -ne "v") {
