@@ -1,0 +1,17 @@
+name: PSGallery
+on:
+  release:
+    types: [published]
+jobs:
+  psgallery_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Build
+        run: dotnet publish -c Release -o publish\Perry
+        
+      - name: Publish
+        run: Publish-Module -Path .\publish\Perry -NuGetApiKey ${{secrets.PSGALLERY}}
+        shell: pwsh
