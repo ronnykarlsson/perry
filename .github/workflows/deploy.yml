@@ -13,5 +13,5 @@ jobs:
         run: dotnet publish -c Release -o publish/Perry
         
       - name: Publish
-        run: Publish-Module -Path .\publish\Perry -NuGetApiKey ${{secrets.PSGALLERY}}
+        run: Publish-Module -Path .\publish\Perry -NuGetApiKey ${{ secrets.PSGALLERY }}
         shell: pwsh
