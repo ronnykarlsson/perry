@@ -15,6 +15,7 @@ $moduleVersionRegex = "(?<=ModuleVersion\s*=\s*')[\d.]+(?=')"
 $psdContent = Get-Content -Path $ModuleFilePath
 $currentModuleVersion = [Regex]::Match($fileContent, $moduleVersionRegex).Value
 if (-not $currentModuleVersion) {
+	Write-Warning "Invalid file: $psdContent"
 	throw "Current module version not found"
 }
 
