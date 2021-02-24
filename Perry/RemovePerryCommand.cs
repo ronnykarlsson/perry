@@ -11,6 +11,7 @@ namespace Perry
         {
             InteractiveErrorHandler.Singleton.Remove();
             MemoryErrorHandler.Singleton.Remove();
+            FileLoggingErrorHandler.Singleton.Remove();
         }
     }
 }
