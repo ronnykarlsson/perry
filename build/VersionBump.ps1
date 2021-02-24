@@ -10,12 +10,11 @@ if ($Version[0] -ne "v") {
 	throw "Expected version tag, for example v1.0.0"
 }
 
-$moduleVersionRegex = "(?<=ModuleVersion\s*=\s*')[\d.]+(?=')"
+$moduleVersionRegex = "(?<=ModuleVersion *= *')[\d.]+(?=')"
 
-$psdContent = Get-Content -Path $ModuleFilePath
-$currentModuleVersion = [Regex]::Match($fileContent, $moduleVersionRegex).Value
+$psdContent = $content = [IO.File]::ReadAllText($ModuleFilePath)
+$currentModuleVersion = [Regex]::Match($psdContent, $moduleVersionRegex).Value
 if (-not $currentModuleVersion) {
-	Write-Warning "Invalid file: $psdContent"
 	throw "Current module version not found"
 }
 
@@ -26,4 +25,5 @@ if ($versionNumber -eq $currentModuleVersion) {
 	return
 }
 
-$psdContent -replace $moduleVersionRegex, $versionNumber | Out-File $ModuleFilePath
+$psdContent = [Regex]::Replace($psdContent, $moduleVersionRegex, $versionNumber)
+[IO.File]::WriteAllText($ModuleFilePath, $psdContent)
