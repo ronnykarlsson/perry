@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using Perry.Errors.Parsing;
+using Perry.Options;
 
 namespace Perry.Errors.Handlers
 {

@@ -3,6 +3,7 @@ using System.Management.Automation;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using Perry.Errors.Parsing;
+using Perry.Options;
 
 namespace Perry.Errors.Handlers
 {

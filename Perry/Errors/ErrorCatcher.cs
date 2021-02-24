@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Management.Automation;
 using System.Runtime.ExceptionServices;
+using System.Text.RegularExpressions;
+using Perry.Options;
 
 namespace Perry.Errors
 {
@@ -51,7 +53,14 @@ namespace Perry.Errors
                 if (runtimeException?.ErrorRecord?.InvocationInfo == null) return;
 
                 var errorRecord = runtimeException.ErrorRecord;
-                var errorInfo = $"{runtimeException.Message}\n{errorRecord.InvocationInfo.PositionMessage}\n{errorRecord.ScriptStackTrace}";
+
+                var stackTrace = errorRecord.ScriptStackTrace;
+                foreach (var regexFilter in PerryStackTraceFilterOptions.StackTraceRegex)
+                {
+                    stackTrace = Regex.Replace(stackTrace, regexFilter.Key, regexFilter.Value);
+                }
+
+                var errorInfo = $"{runtimeException.Message}\n{errorRecord.InvocationInfo.PositionMessage}\n{stackTrace}";
 
                 var currentTime = DateTime.UtcNow;
 

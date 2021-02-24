@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using Perry.Options;
 
 namespace Perry.Errors.Handlers
 {

@@ -14,6 +14,12 @@ Log errors in the background to help with troubleshooting.
 ### [Add-Perry](Add-Perry.md)
 Start error logging.
 
+### [Add-PerryStackTraceFilter](Add-PerryStackTraceFilter.md)
+Add filter to the stack trace.
+
+### [Clear-PerryStackTraceFilter](Clear-PerryStackTraceFilter.md)
+Clear all stack trace filters.
+
 ### [Get-Perry](Get-Perry.md)
 Get latest errors.
 

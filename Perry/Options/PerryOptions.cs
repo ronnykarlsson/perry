@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Perry
+namespace Perry.Options
 {
     class PerryOptions
     {

@@ -1,6 +1,6 @@
-﻿using System.IO;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using Perry.Errors.Handlers;
+using Perry.Options;
 
 namespace Perry
 {

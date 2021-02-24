@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using Perry.Options;
 
 namespace Perry.Errors.Handlers
 {
