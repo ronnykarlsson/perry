@@ -81,7 +81,6 @@ namespace Perry.Errors.Handlers
             }
 
             var outputFile = Path.Combine(_options.LogPath, "perry.log");
-            cmdlet.WriteWarning($"outputting to: {outputFile}");
 
             lock (_syncLogs)
             {
