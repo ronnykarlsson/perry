@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Perry.Options
+namespace Perry.Commands.Options
 {
     static class PerryStackTraceFilterOptions
     {

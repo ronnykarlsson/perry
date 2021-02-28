@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Management.Automation;
 using System.Runtime.ExceptionServices;
 using System.Text.RegularExpressions;
-using Perry.Options;
+using Perry.Commands.Options;
 
-namespace Perry.Errors
+namespace Perry.ErrorHandling
 {
     /// <summary>
     /// Catch first chance exceptions and send them to errors handlers.

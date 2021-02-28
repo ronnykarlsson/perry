@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
-using Perry.Errors.Handlers;
+using Perry.ErrorHandling.Handlers;
 
-namespace Perry
+namespace Perry.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "Perry")]
     [OutputType(typeof(void))]

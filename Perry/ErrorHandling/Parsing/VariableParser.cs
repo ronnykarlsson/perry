@@ -1,8 +1,11 @@
 ﻿using System.Management.Automation;
 using System.Text.RegularExpressions;
 
-namespace Perry.Errors.Parsing
+namespace Perry.ErrorHandling.Parsing
 {
+    /// <summary>
+    /// Parse variable names from script error.
+    /// </summary>
     static class VariableParser
     {
         public static (string Name, string Value)[] GetVariables(PSCmdlet cmdlet, string input)

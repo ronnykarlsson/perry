@@ -1,11 +1,11 @@
 ﻿using System.Management.Automation;
-using Perry.Options;
+using Perry.Commands.Options;
 
-namespace Perry
+namespace Perry.Commands
 {
     [Cmdlet(VerbsCommon.Clear, "PerryStackTraceFilter")]
     [OutputType(typeof(void))]
-    public class ClearPerryStackTraceFilter : PSCmdlet
+    public class ClearPerryStackTraceFilterCommand : PSCmdlet
     {
         protected override void EndProcessing()
         {

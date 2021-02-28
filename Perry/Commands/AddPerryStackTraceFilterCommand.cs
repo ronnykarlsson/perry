@@ -1,11 +1,11 @@
 ﻿using System.Management.Automation;
-using Perry.Options;
+using Perry.Commands.Options;
 
-namespace Perry
+namespace Perry.Commands
 {
     [Cmdlet(VerbsCommon.Add, "PerryStackTraceFilter")]
     [OutputType(typeof(void))]
-    public class AddPerryStackTraceFilter : PSCmdlet
+    public class AddPerryStackTraceFilterCommand : PSCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Pattern { get; set; }

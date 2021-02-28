@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using Perry.Options;
+using Perry.Commands.Options;
 
-namespace Perry.Errors.Handlers
+namespace Perry.ErrorHandling.Handlers
 {
     /// <summary>
     /// Log errors into memory to have them retrievable on-demand with GetPerryCommand.

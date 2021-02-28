@@ -1,8 +1,8 @@
 ﻿using System.Management.Automation;
-using Perry.Errors.Handlers;
-using Perry.Options;
+using Perry.Commands.Options;
+using Perry.ErrorHandling.Handlers;
 
-namespace Perry
+namespace Perry.Commands
 {
     [Cmdlet(VerbsCommon.Add, "Perry")]
     [OutputType(typeof(void))]

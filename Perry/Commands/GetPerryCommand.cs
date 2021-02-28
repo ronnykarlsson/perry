@@ -1,8 +1,8 @@
 ﻿using System.Management.Automation;
-using Perry.Errors;
-using Perry.Errors.Handlers;
+using Perry.ErrorHandling;
+using Perry.ErrorHandling.Handlers;
 
-namespace Perry
+namespace Perry.Commands
 {
     [Cmdlet(VerbsCommon.Get, "Perry")]
     [OutputType(typeof(ErrorInformation[]))]

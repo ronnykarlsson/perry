@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 
-namespace Perry.Errors
+namespace Perry.ErrorHandling
 {
     class ErrorInformation
     {

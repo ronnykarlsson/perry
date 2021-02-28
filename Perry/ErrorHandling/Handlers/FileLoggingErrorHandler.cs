@@ -3,13 +3,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
-using Perry.Errors.Parsing;
-using Perry.Options;
+using Perry.Commands.Options;
+using Perry.ErrorHandling.Parsing;
 
-namespace Perry.Errors.Handlers
+namespace Perry.ErrorHandling.Handlers
 {
     /// <summary>
     /// Output errors to log file.
