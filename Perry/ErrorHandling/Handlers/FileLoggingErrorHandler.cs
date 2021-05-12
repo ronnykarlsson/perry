@@ -66,10 +66,11 @@ namespace Perry.ErrorHandling.Handlers
 
             if (_options?.IncludeVariable == true)
             {
-                var variables = VariableParser.GetVariables(cmdlet, errorInformation.Error);
+                var variables = VariableParser.GetVariables(errorInformation.Error);
                 foreach (var variable in variables)
                 {
-                    errorMessage += $"{Environment.NewLine}   Variable: ${variable.Name} = {variable.Value}";
+                    var variableValue = cmdlet.GetVariableValue(variable).ToString();
+                    errorMessage += $"{Environment.NewLine}   Variable: ${variable} = {variableValue}";
                 }
             }
 

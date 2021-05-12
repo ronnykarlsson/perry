@@ -8,17 +8,17 @@ namespace Perry.ErrorHandling.Parsing
     /// </summary>
     static class VariableParser
     {
-        public static (string Name, string Value)[] GetVariables(PSCmdlet cmdlet, string input)
+        public static string[] GetVariables(string input)
         {
             var variablePattern = @"(?<=\$)([\w]+:)?(\w+)";
 
             var variables = Regex.Matches(input, variablePattern);
 
-            var result = new (string, string)[variables.Count];
+            var result = new string[variables.Count];
             for (int i = 0; i < variables.Count; i++)
             {
                 var variableName = variables[i].Value;
-                result[i] = (variableName, cmdlet.GetVariableValue(variableName).ToString());
+                result[i] = variableName;
             }
 
             return result;

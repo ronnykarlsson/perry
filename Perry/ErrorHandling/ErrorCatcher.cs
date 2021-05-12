@@ -60,7 +60,7 @@ namespace Perry.ErrorHandling
                     stackTrace = Regex.Replace(stackTrace, regexFilter.Key, regexFilter.Value);
                 }
 
-                var errorInfo = $"{runtimeException.Message}\n{errorRecord.InvocationInfo.PositionMessage}\n{stackTrace}";
+                var errorInfo = $"{runtimeException.Message}{Environment.NewLine}{errorRecord.InvocationInfo.PositionMessage}{Environment.NewLine}{stackTrace}";
 
                 var currentTime = DateTime.UtcNow;
 
