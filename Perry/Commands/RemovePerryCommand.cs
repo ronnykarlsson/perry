@@ -12,6 +12,7 @@ namespace Perry.Commands
             InteractiveErrorHandler.Singleton.Remove();
             MemoryErrorHandler.Singleton.Remove();
             FileLoggingErrorHandler.Singleton.Remove();
+            ApplicationInsightsErrorHandler.Singleton.Remove();
         }
     }
 }

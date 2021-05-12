@@ -30,7 +30,7 @@ Describe "Get-Perry" {
 		Add-Perry
 		BuggyCode
 
-		$perryErrorMessage = (Get-Perry)[0].Error
+		$perryErrorMessage = (Get-Perry)[0].ErrorMessage
 		$perryErrorMessage | Should -BeLike "*Attempted to divide by zero.*"
 		$perryErrorMessage | Should -BeLike "*return (10 / (`$InputValue - 7))*"
 		$perryErrorMessage | Should -BeLike "*at DivideFunction, *GetPerryTests.ps1: line *"

@@ -20,9 +20,12 @@ namespace Perry.Commands
         [Parameter(Mandatory = false)]
         public SwitchParameter IncludeVariable { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public string InstrumentationKey { get; set; }
+
         protected override void EndProcessing()
         {
-            var perryOptions = new PerryOptions(Interactive, LogPath, IncludeException, IncludeVariable);
+            var perryOptions = new PerryOptions(Interactive, LogPath, IncludeException, IncludeVariable, InstrumentationKey);
 
             MemoryErrorHandler.Singleton.Add(this, perryOptions);
 
@@ -34,6 +37,11 @@ namespace Perry.Commands
             if (!string.IsNullOrWhiteSpace(LogPath))
             {
                 FileLoggingErrorHandler.Singleton.Add(this, perryOptions);
+            }
+
+            if (!string.IsNullOrWhiteSpace(InstrumentationKey))
+            {
+                ApplicationInsightsErrorHandler.Singleton.Add(this, perryOptions);
             }
         }
     }

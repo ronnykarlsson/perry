@@ -49,11 +49,11 @@ namespace Perry.ErrorHandling.Handlers
 
             var exceptionName = errorInformation.Exception.InnerException?.GetType().Name ?? errorInformation.Exception.GetType().Name;
 
-            var errorMessage = $"Perry ({exceptionName}): {errorInformation.Error}";
+            var errorMessage = $"Perry ({exceptionName}): {errorInformation.ErrorMessage}";
 
             if (_options?.IncludeVariable == true)
             {
-                var variables = VariableParser.GetVariables(errorInformation.Error);
+                var variables = VariableParser.GetVariables(errorInformation.ErrorMessage);
                 foreach (var variable in variables)
                 {
                     var variableValue = cmdlet.GetVariableValue(variable).ToString();

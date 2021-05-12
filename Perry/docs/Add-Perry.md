@@ -13,7 +13,8 @@ Start error logging.
 ## SYNTAX
 
 ```
-Add-Perry [-Interactive] [-LogPath <String>] [-IncludeException] [-IncludeVariable] [<CommonParameters>]
+Add-Perry [-Interactive] [-LogPath <String>] [-IncludeException] [-IncludeVariable]
+ [-InstrumentationKey <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -84,6 +85,21 @@ Accept wildcard characters: False
 
 ### -LogPath
 Path for logging errors to file.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InstrumentationKey
+Instrumentation Key for logging errors to Application Insights
 
 ```yaml
 Type: String

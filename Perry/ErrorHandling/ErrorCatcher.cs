@@ -72,7 +72,7 @@ namespace Perry.ErrorHandling
 
                 OnError(new ErrorInformation
                 {
-                    Error = errorInfo,
+                    ErrorMessage = errorInfo,
                     Exception = runtimeException,
                     ErrorRecord = errorRecord,
                     DateTime = currentTime
