@@ -1,18 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using System.Threading;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.Channel;
+using Microsoft.ApplicationInsights.DependencyCollector;
 using Microsoft.ApplicationInsights.Extensibility;
+using Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel;
 using Perry.Commands.Options;
 
 namespace Perry.ErrorHandling.Handlers
 {
     /// <summary>
-    /// Log errors into memory to have them retrievable on-demand with GetPerryCommand.
+    /// Log errors into Application Insights.
     /// </summary>
-    class ApplicationInsightsErrorHandler : IErrorHandler
+    class ApplicationInsightsErrorHandler : IErrorHandler, IDisposable
     {
         public static ApplicationInsightsErrorHandler Singleton => _singleton.Value;
 
@@ -23,6 +28,7 @@ namespace Perry.ErrorHandling.Handlers
         private static readonly Lazy<ApplicationInsightsErrorHandler> _singleton = new Lazy<ApplicationInsightsErrorHandler>(() => new ApplicationInsightsErrorHandler());
 
         private static TelemetryClient _telemetryClient;
+        private bool disposedValue;
 
         public ApplicationInsightsErrorHandler()
         {
@@ -32,7 +38,7 @@ namespace Perry.ErrorHandling.Handlers
             {
                 if (_isInitialized) return;
                 ErrorCatcher.Singleton.ErrorEvent += ErrorHandler;
-                AppDomain.CurrentDomain.ProcessExit += OnAppdomainExit;
+                AppDomain.CurrentDomain.DomainUnload += OnDomainUnload;
                 _isInitialized = true;
             }
         }
@@ -40,13 +46,26 @@ namespace Perry.ErrorHandling.Handlers
         public void Add(PSCmdlet source, PerryOptions options)
         {
             _options = options;
-            _telemetryClient = new TelemetryClient(new TelemetryConfiguration(options.InstrumentationKey));
+            var configuration = TelemetryConfiguration.CreateDefault();
+            if (!configuration.TelemetryInitializers.Any(t => t is HttpDependenciesParsingTelemetryInitializer))
+                configuration.TelemetryInitializers.Add(new HttpDependenciesParsingTelemetryInitializer());
+            if (!configuration.TelemetryInitializers.Any(t => t is OperationCorrelationTelemetryInitializer))
+                configuration.TelemetryInitializers.Add(new OperationCorrelationTelemetryInitializer());
+            configuration.ConnectionString = options.ApplicationInsightsConnectionString;
+
+            var channel = new ServerTelemetryChannel();
+            var telemetryFolder = Path.Combine(Path.GetTempPath(), "68d24d18-294f-46a4-bcea-e7feb374b516");
+            Directory.CreateDirectory(telemetryFolder);
+            channel.StorageFolder = telemetryFolder;
+            configuration.TelemetryChannel = channel;
+            channel.Initialize(configuration);
+
+            _telemetryClient = new TelemetryClient(configuration);
         }
 
-        private void OnAppdomainExit(object sender, EventArgs e)
+        private void OnDomainUnload(object sender, EventArgs e)
         {
-            var client = _telemetryClient;
-            client?.Flush();
+            Dispose();
         }
 
         public void Remove()
@@ -76,6 +95,36 @@ namespace Perry.ErrorHandling.Handlers
             if (e.ErrorRecord?.InvocationInfo != null) properties.Add("PSCommandPath", e.ErrorRecord.InvocationInfo.PSCommandPath);
 
             client.TrackException(exception, properties);
+            client.FlushAsync(CancellationToken.None).GetAwaiter().GetResult();
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                var client = _telemetryClient;
+                client?.FlushAsync(CancellationToken.None).GetAwaiter().GetResult();
+
+                if (disposing)
+                {
+                }
+
+                _telemetryClient = null;
+                disposedValue = true;
+            }
+        }
+
+        ~ApplicationInsightsErrorHandler()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: false);
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

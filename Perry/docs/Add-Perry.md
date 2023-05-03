@@ -14,7 +14,7 @@ Start error logging.
 
 ```
 Add-Perry [-Interactive] [-LogPath <String>] [-IncludeException] [-IncludeVariable]
- [-InstrumentationKey <String>] [<CommonParameters>]
+ [-ApplicationInsightsConnectionString <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -98,8 +98,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -InstrumentationKey
-Instrumentation Key for logging errors to Application Insights
+### -ApplicationInsightsConnectionString
+Connection string to Application Insights instance to log errors to.
 
 ```yaml
 Type: String

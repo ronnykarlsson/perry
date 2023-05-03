@@ -65,7 +65,7 @@ namespace Perry.ErrorHandling
                 var currentTime = DateTime.UtcNow;
 
                 // The same exception is thrown repeatedly. Workaround to avoid spam until a better way is figured out.
-                if (_lastError == errorInfo && _lastErrorTime > currentTime.AddMilliseconds(-100)) return;
+                if (_lastError == errorInfo && _lastErrorTime > currentTime.AddMilliseconds(-1000)) return;
 
                 _lastError = errorInfo;
                 _lastErrorTime = currentTime;
