@@ -36,7 +36,7 @@ namespace Perry.Commands
                 IncludeException,
                 IncludeVariable,
                 ApplicationInsightsConnectionString,
-                CustomProperties.ConvertToDictionary());
+                CustomProperties?.ConvertToDictionary());
 
             MemoryErrorHandler.Singleton.Add(this, perryOptions);
 
