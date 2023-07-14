@@ -14,7 +14,7 @@ Start error logging.
 
 ```
 Add-Perry [-Interactive] [-LogPath <String>] [-IncludeException] [-IncludeVariable]
- [-ApplicationInsightsConnectionString <String>] [<CommonParameters>]
+ [-ApplicationInsightsConnectionString <String>] [-CustomProperties <Hashtable>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -103,6 +103,21 @@ Connection string to Application Insights instance to log errors to.
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CustomProperties
+Properties to attach to the logs.
+
+```yaml
+Type: Hashtable
 Parameter Sets: (All)
 Aliases:
 

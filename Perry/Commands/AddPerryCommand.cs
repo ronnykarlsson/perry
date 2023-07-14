@@ -1,6 +1,8 @@
-﻿using System.Management.Automation;
+﻿using System.Collections;
+using System.Management.Automation;
 using Perry.Commands.Options;
 using Perry.ErrorHandling.Handlers;
+using Perry.Helpers;
 
 namespace Perry.Commands
 {
@@ -23,9 +25,18 @@ namespace Perry.Commands
         [Parameter(Mandatory = false)]
         public string ApplicationInsightsConnectionString { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public Hashtable CustomProperties { get; set; }
+
         protected override void EndProcessing()
         {
-            var perryOptions = new PerryOptions(Interactive, LogPath, IncludeException, IncludeVariable, ApplicationInsightsConnectionString);
+            var perryOptions = new PerryOptions(
+                Interactive,
+                LogPath,
+                IncludeException,
+                IncludeVariable,
+                ApplicationInsightsConnectionString,
+                CustomProperties.ConvertToDictionary());
 
             MemoryErrorHandler.Singleton.Add(this, perryOptions);
 

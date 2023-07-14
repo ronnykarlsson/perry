@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Threading;
 using Microsoft.ApplicationInsights;
-using Microsoft.ApplicationInsights.Channel;
+using Microsoft.ApplicationInsights.DataContracts;
 using Microsoft.ApplicationInsights.DependencyCollector;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel;
@@ -28,7 +27,7 @@ namespace Perry.ErrorHandling.Handlers
         private static readonly Lazy<ApplicationInsightsErrorHandler> _singleton = new Lazy<ApplicationInsightsErrorHandler>(() => new ApplicationInsightsErrorHandler());
 
         private static TelemetryClient _telemetryClient;
-        private bool disposedValue;
+        private bool _disposedValue;
 
         public ApplicationInsightsErrorHandler()
         {
@@ -61,6 +60,26 @@ namespace Perry.ErrorHandling.Handlers
             channel.Initialize(configuration);
 
             _telemetryClient = new TelemetryClient(configuration);
+
+            if (options.CustomProperties != null && options.CustomProperties.TryGetValue("CloudRoleName", out var cloudRoleName))
+            {
+                options.CustomProperties.Remove("CloudRoleName");
+                _telemetryClient.Context.Cloud.RoleName = cloudRoleName;
+            }
+
+            if (options.CustomProperties != null && options.CustomProperties.TryGetValue("CloudRoleInstance", out var cloudRoleInstance))
+            {
+                options.CustomProperties.Remove("CloudRoleInstance");
+                _telemetryClient.Context.Cloud.RoleInstance = cloudRoleInstance;
+            }
+
+            if (options.CustomProperties != null)
+            {
+                foreach (var property in options.CustomProperties)
+                {
+                    _telemetryClient.Context.GlobalProperties.Add(property.Key, property.Value);
+                }
+            }
         }
 
         private void OnDomainUnload(object sender, EventArgs e)
@@ -100,7 +119,7 @@ namespace Perry.ErrorHandling.Handlers
 
         protected virtual void Dispose(bool disposing)
         {
-            if (!disposedValue)
+            if (!_disposedValue)
             {
                 var client = _telemetryClient;
                 client?.FlushAsync(CancellationToken.None).GetAwaiter().GetResult();
@@ -110,7 +129,7 @@ namespace Perry.ErrorHandling.Handlers
                 }
 
                 _telemetryClient = null;
-                disposedValue = true;
+                _disposedValue = true;
             }
         }
 
